@@ -2,4 +2,4 @@
 
 ## M1 DV1: Intro To Unity
 
-[play build](https://cs355.wagyourtail.github.io/build)
+[play build](https://wagyourtail.github.io/CS455/m1-dv1/index.html)
