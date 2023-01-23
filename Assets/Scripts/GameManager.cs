@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         if (!ended)
         {
             ended = true;
+            Score.Get().freeze();
             Invoke("StartGame", RESTART_TIME);
         }
     }
