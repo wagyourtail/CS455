@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Align : SteeringBehavior
+public class Align<T> : SteeringBehavior where T: Kinematic
 {
-    public Kinematic character;
+    public T character;
     public GameObject target;
 
     float maxAngularAcceleration = 100f; // 5

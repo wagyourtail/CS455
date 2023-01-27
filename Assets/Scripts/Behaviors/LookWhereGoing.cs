@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookWhereGoing : Align
+public class LookWhereGoing : Align<Kinematic>
 {
     // override Align's getTargetAngle to look where we're going instead of matching our target's orientation
     public override float getTargetAngle()

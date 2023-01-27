@@ -1,20 +1,21 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arriver : Kinematic
+public class Seperator : Kinematic
 {
-    Arrive myMoveType;
-    Align<Arriver> myRotateType;
+    Separation myMoveType;
+    Align<Seperator> myRotateType;
 
     // Start is called before the first frame update
     void Start()
     {
-        myMoveType = new Arrive();
+        myMoveType = new Separation();
         myMoveType.character = this;
-        myMoveType.target = myTarget;
+        myMoveType.targets = new[] { myTarget };
 
-        myRotateType = new Align<Arriver>();
+        
+        myRotateType = new Align<Seperator>();
         myRotateType.character = this;
         myRotateType.target = myTarget;
     }

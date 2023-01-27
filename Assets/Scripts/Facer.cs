@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arriver : Kinematic
+public class Facer : Kinematic
 {
-    Arrive myMoveType;
-    Align<Arriver> myRotateType;
+    Face<Facer> myRotateType;
 
     // Start is called before the first frame update
     void Start()
     {
-        myMoveType = new Arrive();
-        myMoveType.character = this;
-        myMoveType.target = myTarget;
 
-        myRotateType = new Align<Arriver>();
+        myRotateType = new Face<Facer>();
         myRotateType.character = this;
         myRotateType.target = myTarget;
     }
@@ -23,7 +19,6 @@ public class Arriver : Kinematic
     protected override void Update()
     {
         steeringUpdate = new SteeringOutput();
-        steeringUpdate.linear = myMoveType.getSteering().linear;
         steeringUpdate.angular = myRotateType.getSteering().angular;
         base.Update();
     }

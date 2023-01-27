@@ -5,7 +5,7 @@ using UnityEngine;
 public class Seeker : Kinematic
 {
     Seek myMoveType;
-    Face mySeekRotateType;
+    Face<Seeker> mySeekRotateType;
     LookWhereGoing myFleeRotateType;
 
     public bool flee = false;
@@ -18,7 +18,7 @@ public class Seeker : Kinematic
         myMoveType.target = myTarget;
         myMoveType.flee = flee;
 
-        mySeekRotateType = new Face();
+        mySeekRotateType = new Face<Seeker>();
         mySeekRotateType.character = this;
         mySeekRotateType.target = myTarget;
 
