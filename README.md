@@ -1,5 +1,8 @@
 # CS455
 
+## M1 DV2: Fundamentals
+[play build](https://wagyourtail.github.io/CS455/m1-dv2/index.html)
+
 ## M1 PR1: Seek + Flee
 [play build](https://wagyourtail.github.io/CS455/m1-pr1/index.html)
 
