@@ -7,7 +7,7 @@ public class Pursuer : Kinematic
     Pursue myMoveType;
     Face<Pursuer> mySeekRotateType;
     LookWhereGoing myFleeRotateType;
-
+    
     public bool flee = false;
 
     // Start is called before the first frame update
