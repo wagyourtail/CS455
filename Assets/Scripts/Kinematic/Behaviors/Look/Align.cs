@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Quaternion = System.Numerics.Quaternion;
 
 namespace Behaviors.Look
 {
