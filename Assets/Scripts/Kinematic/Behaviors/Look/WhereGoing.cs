@@ -11,7 +11,7 @@ namespace Behaviors.Look
         public override float? GetTargetAngle()
         {
             Vector3 velocity = character.linearVelocity;
-            if (velocity.magnitude == 0) return null;
+            if (velocity.magnitude == 0) return character.transform.eulerAngles.y;
             
             return Mathf.Atan2(velocity.x, velocity.z) * Mathf.Rad2Deg;
         }

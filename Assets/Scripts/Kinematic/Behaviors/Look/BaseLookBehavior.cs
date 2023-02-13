@@ -8,7 +8,7 @@ namespace Behaviors.Look
         protected readonly BaseKinematic character;
         public float maxAngularVelocity = 45.0f;
         
-        public float maxAngularAccel = 1f;
+        public float maxAngularAccel = 100f;
         public float slowRadius = 10f;
         
         public float timeToTarget = 0.1f;
@@ -16,6 +16,7 @@ namespace Behaviors.Look
         public BaseLookBehavior(BaseKinematic character)
         {
             this.character = character;
+            this.maxAngularVelocity = character.maxAngularVelocity;
         }
 
         public abstract float? GetTargetAngle();

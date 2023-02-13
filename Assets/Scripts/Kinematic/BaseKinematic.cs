@@ -12,7 +12,6 @@ public abstract class BaseKinematic : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float maxAngularVelocity = 45.0f; // degrees
 
-    // Update is called once per frame
     protected void Update()
     {
         // something is breaking my angular velocity
@@ -21,9 +20,11 @@ public abstract class BaseKinematic : MonoBehaviour
         {
             angularVelocity = 0.0f;
         }
-
+        
         // update my position and rotation - Millington p. 58, lines 7-9
         this.transform.position += linearVelocity * Time.deltaTime;
+
+
         if (Mathf.Abs(angularVelocity) > 0.01f)
         {
             Vector3 v = new Vector3(0, angularVelocity, 0);
@@ -34,7 +35,7 @@ public abstract class BaseKinematic : MonoBehaviour
         // Millington p. 58, lines 11-13
         SteeringOutput? steeringUpdate = UpdateSteering();
         
-        if (steeringUpdate != null)
+        if (steeringUpdate.HasValue)
         {
             linearVelocity += steeringUpdate.Value.linear * Time.deltaTime;
             angularVelocity += steeringUpdate.Value.angular * Time.deltaTime;

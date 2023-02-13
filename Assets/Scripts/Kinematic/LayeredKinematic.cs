@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LayeredKinematic : BaseKinematic
 {
-    KinematicLayer[] layers;
+    public KinematicLayer[] layers;
     
     protected override SteeringOutput? UpdateSteering()
     {
@@ -25,6 +25,12 @@ public class LayeredKinematic : BaseKinematic
         public BaseLookBehavior lookBehavior;
         public BaseMoveBehavior moveBehavior;
 
+        public KinematicLayer(BaseLookBehavior lookBehavior, BaseMoveBehavior moveBehavior)
+        {
+            this.lookBehavior = lookBehavior;
+            this.moveBehavior = moveBehavior;
+        }
+        
         public SteeringOutput? UpdateSteering()
         {
             SteeringOutput steering = new SteeringOutput();

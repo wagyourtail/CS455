@@ -24,7 +24,7 @@ namespace Behaviors.Move
             Vector3? targetPosition = GetTargetPosition();
             if (targetPosition.HasValue)
             {
-                if (targetPosition == Vector3.positiveInfinity)
+                if (targetPosition.Value == Vector3.positiveInfinity)
                 {
                     return null;
                 }
