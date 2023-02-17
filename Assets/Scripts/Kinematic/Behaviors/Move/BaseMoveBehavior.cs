@@ -4,7 +4,7 @@ namespace Behaviors.Move
 {
     public abstract class BaseMoveBehavior
     {
-        protected readonly BaseKinematic character;
+        public readonly BaseKinematic character;
         
         public float maxAcceleration = 100f;
         public float maxVelocity = 10.0f;

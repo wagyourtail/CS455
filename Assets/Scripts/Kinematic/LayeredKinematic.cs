@@ -30,7 +30,7 @@ public class LayeredKinematic : BaseKinematic
             this.lookBehavior = lookBehavior;
             this.moveBehavior = moveBehavior;
         }
-        
+
         public SteeringOutput? UpdateSteering()
         {
             SteeringOutput steering = new SteeringOutput();
@@ -46,6 +46,7 @@ public class LayeredKinematic : BaseKinematic
                     return null;
                 }
             }
+
             if (moveBehavior != null)
             {
                 Vector3? velocity = moveBehavior.UpdateVelocity();
@@ -58,10 +59,8 @@ public class LayeredKinematic : BaseKinematic
                     return null;
                 }
             }
-            
+
             return steering;
         }
-
-
     }
 }

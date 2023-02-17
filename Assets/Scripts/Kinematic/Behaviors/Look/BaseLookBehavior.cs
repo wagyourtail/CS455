@@ -5,7 +5,7 @@ namespace Behaviors.Look
     public abstract class BaseLookBehavior
     {
 
-        protected readonly BaseKinematic character;
+        public readonly BaseKinematic character;
         public float maxAngularVelocity = 45.0f;
         
         public float maxAngularAccel = 100f;
