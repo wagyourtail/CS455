@@ -15,14 +15,14 @@ public class CatKinematic : LayeredKinematic
             new KinematicLayer(
                 new WhereGoing(this),
                 new ObstacleAvoid(this)
-            ),
+            ) {epsilon = 0.1f},
             new KinematicLayer(
                 new WhereGoing(this),
                 new Seperation(this)
                 {
                     target = dog
                 }
-            ),
+            ) {epsilon = 0.1f},
             new KinematicLayer(
                 new WhereGoing(this),
                 new FlockedMove(

@@ -25,6 +25,8 @@ public class LayeredKinematic : BaseKinematic
         public BaseLookBehavior lookBehavior;
         public BaseMoveBehavior moveBehavior;
 
+        public float epsilon = -1f;
+
         public KinematicLayer(BaseLookBehavior lookBehavior, BaseMoveBehavior moveBehavior)
         {
             this.lookBehavior = lookBehavior;
@@ -52,6 +54,10 @@ public class LayeredKinematic : BaseKinematic
                 Vector3? velocity = moveBehavior.UpdateVelocity();
                 if (velocity.HasValue)
                 {
+                    if (velocity.Value.magnitude < epsilon)
+                    {
+                        return null;
+                    }
                     steering.linear = velocity.Value;
                 }
                 else
