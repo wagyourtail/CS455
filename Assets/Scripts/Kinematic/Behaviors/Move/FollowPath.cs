@@ -13,11 +13,16 @@ namespace Behaviors.Move
 
         public override Vector3? GetTargetPosition()
         {
+            if (path == null) return null;
             Vector3 charPos = character.transform.position;
             int currentParam = 0;
             float minDist = float.MaxValue;
             for (int i = 0; i < path.Length; ++i)
             {
+                if (i > 0)
+                {
+                    Debug.DrawLine(path[i-1], path[i], Color.blue);
+                }
                 float dist = Vector3.Distance(charPos, path[i]);
                 if (dist < minDist)
                 {
