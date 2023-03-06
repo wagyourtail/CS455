@@ -5,7 +5,7 @@ namespace Behaviors.Move
 {
     public class BallisticArc : FollowPath
     {
-        public float muzzleVelocity = 10f;
+        public float muzzleVelocity = 40f;
         public Vector3 gravity = Vector3.down * 9.81f;
 
         protected Vector3 start;
@@ -21,6 +21,7 @@ namespace Behaviors.Move
         public void UpdateTarget(Vector3? target)
         {
             this.target = target;
+            Debug.Log(target);
             start = character.transform.position;
             if (!target.HasValue)
             {
