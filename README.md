@@ -1,5 +1,8 @@
 # CS455
 
+## M2-DV1: Dijkstra's
+[play build](https://wagyourtail.github.io/CS455/m2-dv1/index.html)
+
 ## M1-PR5: Ballistics++
 [play build](https://wagyourtail.github.io/CS455/m1-pr5/index.html)
 
