@@ -43,5 +43,15 @@ namespace Behaviors.Move
             Vector3 target = path[currentParam];
             return target - character.transform.position;
         }
+
+        public override Vector3? UpdateVelocity()
+        {
+            if (path != null)
+            for (int i = 1; i < path.Length; ++i)
+            {
+                Debug.DrawLine(path[i-1], path[i], Color.green);
+            }
+            return base.UpdateVelocity();
+        }
     }
 }

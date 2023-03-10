@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 
-public class CastleTarget : MonoBehaviour
+public class PathNode : MonoBehaviour
 {
-    private BallKinematic ball;
 
     // bool debounce = false;
     //
@@ -28,8 +27,8 @@ public class CastleTarget : MonoBehaviour
     {
         Debug.Log("OnMouseDown");
         // find ball kinematic
-        GameObject ball = GameObject.FindGameObjectsWithTag("Player")[0];
-        Debug.Log(ball);
-        ball.GetComponent<BallKinematic>().ballisticArc.UpdateTarget(transform.position);
+        GameObject pathfinder = GameObject.FindGameObjectsWithTag("Player")[0];
+        Debug.Log(pathfinder);
+        pathfinder.GetComponent<Pathfinder>().dijkstra.PathTo(transform.position);
     }
 }
