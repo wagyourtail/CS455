@@ -23,12 +23,16 @@ public class PathNode : MonoBehaviour
     //     }
     // }
 
+    public float weight = 1;
+
     private void OnMouseDown()
     {
         Debug.Log("OnMouseDown");
         // find ball kinematic
-        GameObject pathfinder = GameObject.FindGameObjectsWithTag("Player")[0];
-        Debug.Log(pathfinder);
-        pathfinder.GetComponent<Pathfinder>().dijkstra.PathTo(transform.position);
+        foreach (var pathfinder in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            Debug.Log(pathfinder);
+            pathfinder.GetComponent<Pathfinder>().dijkstra.PathTo(transform.position);
+        }
     }
 }

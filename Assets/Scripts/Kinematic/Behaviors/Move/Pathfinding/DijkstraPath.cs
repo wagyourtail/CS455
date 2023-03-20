@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 
@@ -10,6 +11,8 @@ namespace Behaviors.Move.Pathfinding
     public class Dijkstra : FollowPath
     {
         private List<Node> nodes = new();
+        
+        public bool useWeights = false;
         
         public Dijkstra(BaseKinematic character) : base(character)
         {
@@ -34,7 +37,7 @@ namespace Behaviors.Move.Pathfinding
             return closest;
         }
 
-        public Node addNode(Vector3 position, List<Vector3> neighbors)
+        public Node addNode([CanBeNull] GameObject gameObject, Vector3 position, List<Vector3> neighbors)
         {
             List<Node> neighborsList = new();
             foreach (Vector3 neighbor in neighbors)
@@ -42,17 +45,26 @@ namespace Behaviors.Move.Pathfinding
                 bool flag = false;
                 foreach (var node in nodes)
                 {
-                    if (node.position == neighbor)
+                    if (Vector3.Distance(node.position, neighbor) < 0.2f)
                     {
                         flag = true;
                         neighborsList.Add(node);
                     }
                 }
                 if (!flag)
-                    neighborsList.Add(addNode(neighbor, new List<Vector3>()));
+                    neighborsList.Add(addNode(null, neighbor, new List<Vector3>()));
             }
-
-            Node self = new Node(position, neighborsList);
+            // find if self exists
+            Node self = new Node(gameObject, position, neighborsList);
+            foreach (var node in nodes)
+            {
+                if (Vector3.Distance(node.position, position) < 0.2f)
+                {
+                    node.gameObject = gameObject;
+                    self = node;
+                    break;
+                }
+            }
             foreach (var node in neighborsList)
             {
                 node.neighbors.Add(self);
@@ -61,13 +73,39 @@ namespace Behaviors.Move.Pathfinding
             Debug.Log("Added node " + self.position);
             return self;
         }
+        
+        public Node addNode(GameObject gameObject, List<Vector3> neighbors)
+        {
+            return addNode(gameObject, gameObject.transform.position, neighbors);
+        }
+
+        public void addNodes(Dictionary<GameObject, List<GameObject>> nodes)
+        {
+            Dictionary<GameObject, Node> nodeMap = new();
+            foreach (var key in nodes.Keys)
+            {
+                Node n = new(key, key.transform.position, new List<Node>());
+                nodeMap.Add(key, n);
+            }
+
+            foreach (var key in nodes.Keys)
+            {
+                Node k = nodeMap[key];
+                foreach (var neighbor in nodes[key])
+                {
+                    k.neighbors.Add(nodeMap[neighbor]);
+                }
+            }
+            Debug.Log("Added " + nodeMap.Count + " nodes");
+            this.nodes.AddRange(nodeMap.Values);
+        }
 
         public void PathTo(Vector3 pos)
         {
             Node nPos = null;
             foreach (var node in nodes)
             {
-                if (node.position == pos)
+                if (Vector3.Distance(node.position, pos) < 0.2f)
                 {
                     nPos = node;
                     break;
@@ -155,17 +193,31 @@ namespace Behaviors.Move.Pathfinding
 
         public float getConnectionCost(Node start, Node end)
         {
-            return Vector3.Distance(start.position, end.position);
+            float weight = 1.0f;
+            if (useWeights)
+            {
+                if (start.gameObject != null)
+                {
+                    weight *= start.gameObject.GetComponent<PathNode>().weight;
+                }
+                if (end.gameObject != null)
+                {
+                    weight *= end.gameObject.GetComponent<PathNode>().weight;
+                }
+            }
+            return Vector3.Distance(start.position, end.position) * weight;
         }
 
 
         public class Node
         {
+            [CanBeNull] public GameObject gameObject;
             public readonly Vector3 position;
             public readonly List<Node> neighbors;
 
-            public Node(Vector3 position, List<Node> neighbors)
+            public Node([CanBeNull] GameObject gameObject, Vector3 position, List<Node> neighbors)
             {
+                this.gameObject = gameObject;
                 this.position = position;
                 this.neighbors = neighbors;
             }

@@ -10,6 +10,7 @@ public class Pathfinder : LayeredKinematic
     public GameObject[] graph;
 
     public Dijkstra dijkstra;
+    public bool useWeights = false;
     
     void Start()
     {
@@ -22,6 +23,9 @@ public class Pathfinder : LayeredKinematic
             new KinematicLayer(
                 new WhereGoing(this),
                 dijkstra = new Dijkstra(this)
+                {
+                    useWeights = useWeights
+                }
             )
         };
         Dictionary<GameObject, List<GameObject>> g = new();
@@ -38,18 +42,17 @@ public class Pathfinder : LayeredKinematic
             {
                 g[connection0].Add(connection1);
             }
-        }
 
-        foreach (var key in g.Keys)
-        {
-            List<Vector3> connected = new();
-            foreach (var node in g[key])
+            if (!g.ContainsKey(connection1))
             {
-                connected.Add(node.transform.position);
+                g.Add(connection1, new List<GameObject> {connection0});
             }
-
-            dijkstra.addNode(key.transform.position, connected);
+            else
+            {
+                g[connection1].Add(connection0);
+            }
         }
+        dijkstra.addNodes(g);
     }
 
     private void Update()
