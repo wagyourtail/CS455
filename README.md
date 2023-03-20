@@ -1,5 +1,11 @@
 # CS455
 
+## M2-PR1: Tactical Pathfinding
+[play build](https://wagyourtail.github.io/CS455/m2-pr1/index.html)
+
+## M2-DV1: Pathfinding
+[play build](https://wagyourtail.github.io/CS455/m2-dv1/index.html)
+
 ## M1-PR5: Ballistics++
 [play build](https://wagyourtail.github.io/CS455/m1-pr5/index.html)
 
