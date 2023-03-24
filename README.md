@@ -1,5 +1,9 @@
 # CS455
 
+## M2-DV1.2: NavMeshes
+[play build](https://wagyourtail.github.io/CS455/m2-dv1.2/index.html)
+
+
 ## M2-PR1: Tactical Pathfinding
 [play build](https://wagyourtail.github.io/CS455/m2-pr1/index.html)
 
