@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class Door : MonoBehaviour
 {
     public bool isClosed = false;
     public bool isLocked = false;
+
+    private int state = 0;
 
     Vector3 closedRotation = new Vector3(0, 0, 0);
     Vector3 openRotation = new Vector3(0, -135, 0);
@@ -46,5 +49,27 @@ public class Door : MonoBehaviour
             isClosed = true;
         }
         return true;
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            isLocked = !isLocked;
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Close();
+            return;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            isLocked = false;
+            Open();
+            return;
+        }
     }
 }
