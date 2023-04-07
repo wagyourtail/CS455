@@ -2,6 +2,9 @@
 
 ## M2
 
+### M2-DV3: Behavior Trees
+[play build](https://wagyourtail.github.io/CS455/m2-dv3/index.html)
+
 ### M2-PR1.2: NavMeshes++
 [play build](https://wagyourtail.github.io/CS455/m2-pr1.2/index.html)
 
