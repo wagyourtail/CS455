@@ -102,7 +102,7 @@ public class HulkOut : Task
 
     public override void run()
     {
-        //Debug.Log("hulking out");
+        Debug.Log("hulking out");
         mEntity.transform.localScale *= 2;
         mEntity.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         succeeded = true;
@@ -170,18 +170,93 @@ public class MoveKinematicToObject : Task
 
     public override void run()
     {
-        //Debug.Log("Moving to target position: " + mTarget);
+        Debug.Log("Moving to target position: " + mTarget);
         mMover.OnArrived += MoverArrived;
-        mMover.myTarget = mTarget;
+        mMover.myTarget = mTarget.transform.position;
     }
 
     public void MoverArrived()
     {
-        //Debug.Log("arrived at " + mTarget);
+        Debug.Log("arrived at " + mTarget);
         mMover.OnArrived -= MoverArrived;
         succeeded = true;
         EventBus.TriggerEvent(TaskFinished);
     }
+}
+
+public class MoveKinematicAwayFromObject : Task
+{
+    Arriver mMover;
+    GameObject mTarget;
+    private int dist;
+
+    public MoveKinematicAwayFromObject(Kinematic mover, GameObject target, int distance)
+    {
+        mMover = mover as Arriver;
+        mTarget = target;
+        dist = distance;
+    }
+
+    public override void run()
+    {
+        Debug.Log("Moving to target position: " + mTarget);
+        mMover.OnArrived += MoverArrived;
+        // offset target to be opposite relative to mover
+        Vector3 offset = mMover.transform.position - mTarget.transform.position;
+        mMover.myTarget = mMover.transform.position + offset.normalized * dist;
+    }
+
+    public void MoverArrived()
+    {
+        Debug.Log("ran from " + mTarget);
+        mMover.OnArrived -= MoverArrived;
+        succeeded = true;
+        EventBus.TriggerEvent(TaskFinished);
+    }
+}
+
+public class RemoveTarget : Task
+{
+    // just removes the target object
+    GameObject mTarget;
+    
+    public RemoveTarget(GameObject _, GameObject target)
+    {
+        mTarget = target;
+    }
+    
+    public override void run()
+    {
+        Debug.Log("Removing target: " + mTarget);
+        GameObject.Destroy(mTarget);
+        succeeded = true;
+        EventBus.TriggerEvent(TaskFinished);
+    }
+    
+}
+
+public class AttackObject : Task
+{
+    // by attack, I mean give the object a force in the direction away from the attacker
+    GameObject mAttacker;
+    GameObject mTarget;
+    
+    public AttackObject(GameObject attacker, GameObject target)
+    {
+        mAttacker = attacker;
+        mTarget = target;
+    }
+    
+    public override void run()
+    {
+        Debug.Log("Attacking target: " + mTarget);
+        Rigidbody targetRb = mTarget.GetComponent<Rigidbody>();
+        Vector3 direction = mTarget.transform.position - mAttacker.transform.position;
+        targetRb.AddForce(direction.normalized * 10f, ForceMode.VelocityChange);
+        succeeded = true;
+        EventBus.TriggerEvent(TaskFinished);
+    }
+
 }
 
 public class Sequence : Task
@@ -201,7 +276,7 @@ public class Sequence : Task
     // return true if all tasks succeed
     public override void run()
     {
-        //Debug.Log("sequence running child task #" + currentTaskIndex);
+        Debug.Log("sequence running child task #" + currentTaskIndex);
         currentTask = children[currentTaskIndex];
         EventBus.StartListening(currentTask.TaskFinished, OnChildTaskFinished);
         currentTask.run();
@@ -209,7 +284,7 @@ public class Sequence : Task
 
     void OnChildTaskFinished()
     {
-        //Debug.Log("Behavior complete! Success = " + currentTask.succeeded);
+        Debug.Log("Behavior complete! Success = " + currentTask.succeeded);
         if (currentTask.succeeded)
         {
             EventBus.StopListening(currentTask.TaskFinished, OnChildTaskFinished);
@@ -253,7 +328,7 @@ public class Selector : Task
     // return false if all tasks fail
     public override void run()
     {
-        //Debug.Log("selector running child task #" + currentTaskIndex);
+        Debug.Log("selector running child task #" + currentTaskIndex);
         currentTask = children[currentTaskIndex];
         EventBus.StartListening(currentTask.TaskFinished, OnChildTaskFinished);
         currentTask.run();
@@ -261,7 +336,7 @@ public class Selector : Task
 
     void OnChildTaskFinished()
     {
-        //Debug.Log("Behavior complete! Success = " + currentTask.succeeded);
+        Debug.Log("Behavior complete! Success = " + currentTask.succeeded);
         if (currentTask.succeeded)
         {
             succeeded = true;

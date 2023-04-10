@@ -12,7 +12,7 @@ public class Kinematic : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float maxAngularVelocity = 45.0f; // degrees
 
-    public GameObject myTarget;
+    public Vector3 myTarget;
 
     // child classes will get new steering data for use in our update function
     protected SteeringOutput steeringUpdate;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Arrive : SteeringBehavior
 {
     public Kinematic character;
-    public GameObject target;
+    public Vector3 target;
 
     float maxAcceleration = 100f;
     float maxSpeed = 10f;
@@ -24,7 +24,7 @@ public class Arrive : SteeringBehavior
         SteeringOutput result = new SteeringOutput();
 
         // get the direction to the target
-        Vector3 direction = target.transform.position - character.transform.position;
+        Vector3 direction = target - character.transform.position;
         float distance = direction.magnitude;
 
         //if (distance < targetRadius)

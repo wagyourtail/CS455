@@ -25,7 +25,7 @@ public class Arriver : Kinematic
 
         if (myTarget != null)
         {
-            if ((myTarget.transform.position - transform.position).magnitude < 1.5f)
+            if ((myTarget - transform.position).magnitude < 1.5f)
             {
                 OnArrived?.Invoke();
             }

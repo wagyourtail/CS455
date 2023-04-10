@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,12 @@ public class BruceBanner : MonoBehaviour
     public GameObject test;
     bool executingBehavior = false;
     Task myCurrentTask;
+
+    private void Start()
+    {
+        executingBehavior = false;
+        this.GetComponent<Kinematic>().myTarget = transform.position;
+    }
 
     // Update is called once per frame
     void Update()
@@ -35,6 +42,7 @@ public class BruceBanner : MonoBehaviour
     
     Task BuildTask_GetTreasue()
     {
+        Debug.Log("Building behavior tree");
         // create our behavior tree based on Millington pg. 344
         // building from the bottom up
         List<Task> taskList = new List<Task>();
@@ -84,12 +92,53 @@ public class BruceBanner : MonoBehaviour
         taskList.Add(moveToTreasure);
         Sequence getTreasureBehindOpenDoor = new Sequence(taskList);
 
-        // get the treasure, one way or another
+        // detect if treasure will explode
+        taskList = new List<Task>();
+        Task isTreasureExplody = new IsTrue(theTreasure.GetComponent<Treasure>().willExplode);
+        Task runAway = new MoveKinematicAwayFromObject(this.GetComponent<Kinematic>(), theTreasure.gameObject, 10);
+        taskList.Add(isTreasureExplody);
+        taskList.Add(waitABeat);
+        taskList.Add(runAway);
+        Sequence runAwayFromExplodyTreasure = new Sequence(taskList);
+        
+        // detect if the treasure is hostile
+        // if so attack it
+        taskList = new List<Task>();
+        Task isTreasureHostile = new IsTrue(theTreasure.GetComponent<Treasure>().isHostile);
+        Task attackTreasure = new AttackObject(this.gameObject, theTreasure.gameObject);
+        taskList.Add(isTreasureHostile);
+        taskList.Add(waitABeat);
+        taskList.Add(attackTreasure);
+        Sequence attackHostileTreasure = new Sequence(taskList);
+
+        // if treasure isn't hostile, collect it
+        taskList = new List<Task>();
+        Task isTreasureNotExplody = new IsFalse(theTreasure.GetComponent<Treasure>().willExplode);
+        Task isTreasureNotHostile = new IsFalse(theTreasure.GetComponent<Treasure>().isHostile);
+        Task collectTreasure = new RemoveTarget(this.gameObject, theTreasure.gameObject);
+        taskList.Add(isTreasureNotExplody);
+        taskList.Add(isTreasureNotHostile);
+        taskList.Add(waitABeat);
+        taskList.Add(collectTreasure);
+        Sequence collectNonHostileTreasure = new Sequence(taskList);
+
+        // get to Treasure
         taskList = new List<Task>();
         taskList.Add(getTreasureBehindOpenDoor);
         taskList.Add(getTreasureBehindClosedDoor);
         Selector getTreasure = new Selector(taskList);
-
-        return getTreasure;
+        
+        taskList = new List<Task>();
+        taskList.Add(runAwayFromExplodyTreasure);
+        taskList.Add(attackHostileTreasure);
+        taskList.Add(collectNonHostileTreasure);
+        Selector afterArrive = new Selector(taskList);
+        
+        taskList = new List<Task>();
+        taskList.Add(getTreasure);
+        taskList.Add(afterArrive);
+        Sequence root = new Sequence(taskList);
+        
+        return root;
     }
 }

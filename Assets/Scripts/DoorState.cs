@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DoorState : MonoBehaviour
 {
     public Door door;
+    public Treasure treasure;
 
     public Text text;
     // Start is called before the first frame update
@@ -18,7 +19,7 @@ public class DoorState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        String s = "";
+        String s = "Door: ";
         if (door.isClosed)
         {
             s += "Closed";
@@ -31,6 +32,18 @@ public class DoorState : MonoBehaviour
         if (door.isLocked)
         {
             s += " Locked";
+        }
+
+        s += "\n";
+        s += "Treasure: ";
+        if (treasure.willExplode)
+        {
+            s+= "Explodes";
+        }
+        
+        if (treasure.isHostile)
+        {
+            s+= " Hostile";
         }
 
         text.text = s;
