@@ -472,8 +472,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -225, y: 251}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -189.43097, y: 228.86816}
+  m_SizeDelta: {x: 231.138, y: 74.2636}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &312040668
 MonoBehaviour:
@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1183386154}
-  treasure: {fileID: 0}
+  treasure: {fileID: 2118837610}
   text: {fileID: 312040669}
 --- !u!114 &312040669
 MonoBehaviour:
@@ -569,8 +569,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 205, y: 225.44}
-  m_SizeDelta: {x: 184.7859, y: 81.121}
+  m_AnchoredPosition: {x: 201.04785, y: 215.95493}
+  m_SizeDelta: {x: 192.6902, y: 100.0912}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &432817700
 MonoBehaviour:
