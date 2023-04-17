@@ -1,0 +1,4 @@
+torch==1.11
+mlagents==0.28.0
+protobuf==3.20.0
+numpy==1.19.5
